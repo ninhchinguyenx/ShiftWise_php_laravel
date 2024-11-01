@@ -83,6 +83,8 @@
         </div>
     </div><!--end col-->
 </div><!--end row-->
+@endsection
+
 @section('admin-js-lib')
   <!-- dropzone min -->
   <script src="/admin-assets/libs/dropzone/dropzone-min.js"></script>
@@ -94,5 +96,4 @@
   <script src="/admin-assets/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js"></script>
 
   <script src="/admin-assets/js/pages/form-file-upload.init.js"></script>
-@endsection
 @endsection

@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\CaLamViecController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NhanVienController;
+use App\Http\Middleware\AuthticationAdmin;
 use App\Models\nhanVien;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +19,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.index');
+
+
+Route::get('/login', [LoginController::class, "showForm"]);
+Route::post('/login', [LoginController::class, "login"])->name('login');
+
+
+
+
+
+
+
+
+Route::middleware(['auth.custom'])->group(function () {
+    Route::get('/', function () {
+        return view('admin.index');
+    })->name('dashboard');
+    Route::resource('nhanvien', NhanVienController::class);
+    Route::resource('calamviec', CaLamViecController::class);
+    Route::post('/logout', [LoginController::class, "logout"])->name('logout');
 });
 
-Route::resource('nhanvien', NhanVienController::class);

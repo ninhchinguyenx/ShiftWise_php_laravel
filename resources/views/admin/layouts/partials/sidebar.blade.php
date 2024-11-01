@@ -50,21 +50,40 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="#sidebarDashboards2" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarDashboards2">
                         <i class="ri-dashboard-2-line"></i>
                         <span data-key="t-dashboards">Quản lý ca làm việc</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
+                    <div class="collapse menu-dropdown" id="sidebarDashboards2">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route("nhanvien.index")}}" class="nav-link" data-key="t-analytics">
+                                <a href="{{route("calamviec.index")}}" class="nav-link" data-key="t-analytics">
                                     Danh sách ca làm việc
                                 </a>
                             </li>
                            
                         </ul>
                     </div>
+                    
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarDashboards3" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarDashboards3">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">Quản lý ca điểm danh chấm công</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarDashboards3">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route("calamviec.index")}}" class="nav-link" data-key="t-analytics">
+                                    Điểm danh & Chấm Công
+                                </a>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                    
                 </li>
                 <!-- end Dashboard Menu -->
             </ul>
