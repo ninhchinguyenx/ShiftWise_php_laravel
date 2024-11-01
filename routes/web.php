@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NhanVienController;
+use App\Models\nhanVien;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.index');
 });
+
+Route::resource('nhanvien', NhanVienController::class);
