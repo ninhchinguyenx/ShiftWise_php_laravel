@@ -11,4 +11,9 @@ class caLamViec extends Model
     protected $table = 'calamviec';
     protected $primaryKey ='maCa'; 
     protected $fillable = ['maCa', 'thoiGianBatDau', 'thoiGianKetThuc', 'ngayLamviec', 'soLuongMax'];
+
+    public function diemDanhChamCong()
+    {
+        return $this->hasMany(diemDanh_chamCong::class, 'maCa', 'maCa');
+    }
 }

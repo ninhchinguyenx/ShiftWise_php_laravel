@@ -11,4 +11,8 @@ class nhanVien extends Model
     protected $table = 'nhanvien';
     protected $primaryKey ='maNhanVien'; 
     protected $fillable = ['maNhanVien', 'anh', 'tenDangNhap', 'matKhau', 'thamNien', 'email','SDT','STK','diaChi','chucVu','luong','hoTen','sinhNhat'];
+    public function diemDanhChamCong()
+    {
+        return $this->hasMany(diemDanh_chamCong::class, 'maNhanVien', 'maNhanVien');
+    }
 }

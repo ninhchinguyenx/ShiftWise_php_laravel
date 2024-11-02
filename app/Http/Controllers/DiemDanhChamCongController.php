@@ -2,63 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\caLamViec;
+use App\Models\diemDanh_chamCong;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DiemDanhChamCongController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function diemDanhChamCong()
     {
-        //
+        $ngayHienTai = Carbon::today();
+        $maNV = session('nhanVien')->maNhanVien;
+        // Lấy tất cả các ca làm việc trong ngày hiện tại
+        $caLamViecNv = diemDanh_chamCong::where('maNhanVien', $maNV)->whereHas('caLamViec', function ($query) use ($ngayHienTai) {
+            $query->whereDate('ngayLamviec', $ngayHienTai);
+        })->with('caLamViec')->get();
+
+        return view('admin.pages.diemDanhChamCong.index', compact('caLamViecNv'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function diemDanhChamCongNV(Request $request)
     {
-        //
+        
+        $chamCong = diemDanh_chamCong::query()->find($request->maDDvaCC);
+        if($chamCong->trangThaiDiemDanh){
+            $data = [
+                'thoiGianChamCong' => $request->thoiGianChamCong,
+                'trangThaiChamCong' => true,
+            ];
+            $chamCong->update($data);
+            return redirect()->route('diemDanhChamCong')->with('success', 'Chấm công thành công!');
+        }else{
+            toastr()->error('Bạn chưa điểm danh vui lòng điểm danh chức khi chấm công!');
+            return redirect()->back();
+        }
+       
+    }
+    public function diemDanhNV(Request $request)
+    {
+        $thoiGianDiemDanh = Carbon::parse($request->thoiGianDiemDanh)->format('H:i');
+        $thoiGianBatDau = Carbon::createFromFormat('H:i', $request->thoiGianBatDau);
+        $thoiGianKetThuc = Carbon::createFromFormat('H:i', $request->thoiGianKetThuc);
+        $thoiGianDiemDanh = Carbon::createFromFormat('H:i',  $thoiGianDiemDanh);
+
+        if ($thoiGianDiemDanh->between($thoiGianBatDau, $thoiGianKetThuc)) {
+            $diemDanh = diemDanh_chamCong::query()->find($request->maDDvaCC);
+
+            $data = [
+                'thoiGianDiemDanh' => $request->thoiGianDiemDanh,
+                'trangThaiDiemDanh' => true,
+            ];
+            $diemDanh->update($data);
+            return redirect()->route('diemDanhChamCong')->with('success', 'Điểm danh thành công!');
+        } else {
+            toastr()->error('Thời gian điểm danh không nằm trong ca làm việc');
+            return redirect()->back();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function huyCC(Request $request){
+        $maDDvaCC = $request->maDDvaCC;
+        $diemDanh = diemDanh_chamCong::query()->find($maDDvaCC);
+        $diemDanh->update(['thoiGianChamCong'=>null, 'trangThaiChamCong'=>false]);
+        toastr()->success('Hủy chấm công thành công!!');
+
+        return redirect()->route('diemDanhChamCong');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    public function huyDD(Request $request){
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $maDDvaCC = $request->maDDvaCC;
+        $diemDanh = diemDanh_chamCong::query()->find($maDDvaCC);
+        $diemDanh->update(['trangThaiDiemDanh' => false, 'thoiGianDiemDanh' => null, 'thoiGianChamCong'=>null, 'trangThaiChamCong'=>false]);
+        toastr()->success('Hủy điểm danh thành công!!');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('diemDanhChamCong');
     }
 }

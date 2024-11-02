@@ -76,7 +76,12 @@
                     <div class="collapse menu-dropdown" id="sidebarDashboards3">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route("calamviec.index")}}" class="nav-link" data-key="t-analytics">
+                                <a href="{{route("dkiCa")}}" class="nav-link" data-key="t-analytics">
+                                    Đăng kí ca làm việc
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route("diemDanhChamCong")}}" class="nav-link" data-key="t-analytics">
                                     Điểm danh & Chấm Công
                                 </a>
                             </li>

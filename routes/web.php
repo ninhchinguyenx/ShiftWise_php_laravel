@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CaLamViecController;
+use App\Http\Controllers\DiemDanhChamCongController;
+use App\Http\Controllers\DkiCaLamViecController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NhanVienController;
 use App\Http\Middleware\AuthticationAdmin;
@@ -37,6 +39,18 @@ Route::middleware(['auth.custom'])->group(function () {
     })->name('dashboard');
     Route::resource('nhanvien', NhanVienController::class);
     Route::resource('calamviec', CaLamViecController::class);
+    Route::get('dkiCa',[DkiCaLamViecController::class,'dkiCa'])->name('dkiCa');
+    Route::post('dkiCaLamViec',[DkiCaLamViecController::class,'dkiCaLamViec'])->name('dkiCaLamViec');
     Route::post('/logout', [LoginController::class, "logout"])->name('logout');
+
+    Route::get('/diemDanh', [DiemDanhChamCongController::class,'diemDanh'])->name('diemDanh');
+    Route::get('/diemDanhChamCong', [DiemDanhChamCongController::class,'diemDanhChamCong'])->name('diemDanhChamCong');
+
+    Route::post('/diemDanh', [DiemDanhChamCongController::class,'diemDanhNV'])->name('diemDanhNV');
+    Route::post('/diemDanhChamCong', [DiemDanhChamCongController::class,'diemDanhChamCongNV'])->name('diemDanhChamCongNV');
+
+    Route::post('/huyDiemDanh', [DiemDanhChamCongController::class,'huyDD'])->name('huyDD');
+    Route::post('/huyChamCong', [DiemDanhChamCongController::class,'huyCC'])->name('huyCC');
+
 });
 

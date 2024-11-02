@@ -19,7 +19,6 @@ class CaLamViecController extends Controller
         return view("admin.pages.caLamViec.index", compact('caLamViec'));
         
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -38,7 +37,7 @@ class CaLamViecController extends Controller
             DB::beginTransaction();
             $caLamViec = $request->all();
             caLamViec::query()->create($caLamViec);
-            toastr()->error('Tạo thành công!');
+            toastr()->success('Tạo thành công!');
 
             DB::commit();
             return redirect()->route('calamviec.index');
